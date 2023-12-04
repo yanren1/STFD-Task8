@@ -26,7 +26,7 @@ resource:bookCottage rdfs:type sswap:Resource, cottage:CottageBookService;
 
             sswap:mapsTo [
                 rdfs:type sswap:Object, cottage:Offers;
-                cottage:BookingStatus ""^^xsd:string;
+                cottage:bookingStatus ""^^xsd:string;
             ]
         ]
     ].

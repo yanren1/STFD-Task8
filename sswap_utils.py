@@ -1,5 +1,5 @@
 from rdflib import Graph, Literal, BNode, Namespace, RDF, URIRef
-
+from  alignment import prefix_mapping,greedy_mapping
 def fill_rig(form_data,rdg):
 
     g = Graph()
@@ -12,13 +12,29 @@ def fill_rig(form_data,rdg):
             has_mapping_node = o
             break
 
-    cottage_namespace = Namespace("http://example.org/cottage/")
+    prefix = prefix_mapping(['cottage'],rdg)
+    cottage_namespace = Namespace(prefix['cottage'])
+
+    # alignment
+    form_data_keys = list(form_data.keys())
+    rdg_key = []
+    for s, p, o in g.triples((has_mapping_node, None, None)):
+        if prefix['cottage'] in p:
+            if'#' in p:
+                p = p.split('#')[-1]
+                if '/' in p:
+                    p = p.split('/')[-1]
+            else:
+                p = p.split('/')[-1]
+            rdg_key.append(p)
+
+    key_mapping = greedy_mapping(form_data_keys,rdg_key)
+
+    # fill_rig here
     for key, value in form_data.items():
-            # check keys in Cottage ontology
-            if hasattr(cottage_namespace, key):
-                for s, p, o in g.triples((has_mapping_node, getattr(cottage_namespace, key), None)):
-                    g.remove((s, p, o))
-                    g.add((s, p, Literal(value)))
+            for s, p, o in g.triples((has_mapping_node, getattr(cottage_namespace, key_mapping[key][0]), None)):
+                g.remove((s, p, o))
+                g.add((s, p, Literal(value)))
 
     rig = g.serialize(format='n3')
     # print(rig)
@@ -30,7 +46,10 @@ def read_rig(rig):
     # g.parse("rdg.rdf", format='n3')
     g.parse(data=rig, format='n3')
 
-    cottage_ns = Namespace("http://example.org/cottage/")
+
+    prefix = prefix_mapping(['cottage'],rig)
+
+    cottage_ns = Namespace(prefix['cottage'])
     sswap = Namespace("http://sswapmeet.sswap.info/sswap/")
 
     query = """
@@ -46,8 +65,16 @@ def read_rig(rig):
 
     for row in results:
         key = str(row['propertyName'])
-        if "http://example.org/cottage/" in key:
-            key = key.split("/")[-1]
+        if prefix['cottage'] in key:
+            # key = key.split("/")[-1]
+            if '#' in key:
+                key = key.split('#')[-1]
+                if '/' in key:
+                    key = key.split('/')[-1]
+            else:
+                key = key.split('/')[-1]
+
+
             value = str(row['propertyValue'])
 
             user_input[key] = value
@@ -61,8 +88,8 @@ def fill_rrg(rig,offer):
     g = Graph()
     # rig
     g.parse(data=rig, format='n3')
-
-    cottage = Namespace("http://example.org/cottage/")
+    prefix = prefix_mapping(['cottage'], rig)
+    cottage = Namespace(prefix['cottage'])
     sswap = Namespace("http://sswapmeet.sswap.info/sswap/")
 
 
@@ -99,7 +126,7 @@ def fill_rrg(rig,offer):
 
 
     rrg = g.serialize(format='n3')
-    print(rrg)
+
     return  rrg
 
 def read_rrg(rrg):
@@ -107,7 +134,8 @@ def read_rrg(rrg):
     # rig
     g.parse(data=rrg, format='n3')
 
-    cottage_ns = Namespace("http://example.org/cottage/")
+    prefix = prefix_mapping(['cottage'], rrg)
+    cottage_ns = Namespace(prefix['cottage'])
     sswap = Namespace("http://sswapmeet.sswap.info/sswap/")
 
     query = """
@@ -118,21 +146,46 @@ def read_rrg(rrg):
             ?objectNode ?propertyName ?propertyValue.
         }
         """
-    offers = {}
+    rrg_offers = {}
     results = g.query(query, initNs={"sswap": sswap, "cottage": cottage_ns})
 
     for row in results:
         key = str(row['propertyName'])
-        if "http://example.org/cottage/" in key:
+        if prefix['cottage'] in key:
 
-            key = key.split("/")[-1]
+            if '#' in key:
+                key = key.split('#')[-1]
+                if '/' in key:
+                    key = key.split('/')[-1]
+            else:
+                key = key.split('/')[-1]
+
             value = str(row['propertyValue'])
 
-            if key not in offers:
-                offers[key] = [value]
+            if key not in rrg_offers:
+                rrg_offers[key] = [value]
             else:
-                offers[key].append(value)
+                rrg_offers[key].append(value)
         else:
             continue
 
-    return offers
+    return rrg_offers
+
+def get_prefix(rdf):
+    prefix_dict = {}
+
+    lines = [line for line in rdf.split('\n') if line.startswith('@prefix')]
+    for line in lines:
+        ele = line.split('<')
+        key = ''
+        for i in ele:
+            if '@prefix' in i:
+                key = i.split('@prefix')[-1].strip().strip(':').strip()
+                prefix_dict[key] = ''
+            if 'http' in i:
+                value = i.split('>')[0].strip()
+                prefix_dict[key] = value
+    return prefix_dict
+
+
+

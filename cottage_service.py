@@ -41,7 +41,7 @@ def bookCottage():
     choosen_offer = read_rig(rig)
 
     update_ont(choosen_offer)
-    status = {'BookingStatus':'1'}
+    status = {'bookingStatus':'1'}
     rrg = fill_rrg(rig,status)
     response = Response(rrg)
     return response

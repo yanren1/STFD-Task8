@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, redirect, url_for,send_from_d
 from sswap_utils import fill_rig,read_rrg
 import requests
 import ast
-from readont import update_ont
+from alignment import greedy_mapping
 
 app = Flask(__name__)
 
@@ -38,7 +38,15 @@ def form_client():
 @app.route('/offers')
 def offers():
     str_offer = request.args.get('offer', 'default_value')
-    offer = ast.literal_eval(str_offer)
+    rrg_offers = ast.literal_eval(str_offer)
+
+    html_keys = ['cottageName','bookerName','bookingNum','address','image','numPlaces',
+                 'numBedrooms','lakeDistance','nearestCity','startDate','endDate']
+    rrg_offers_keys = list(rrg_offers.keys())
+    key_mapping = greedy_mapping(html_keys, rrg_offers_keys)
+
+    offer = {k:rrg_offers[v[0]] for k,v in key_mapping.items()}
+
 
     return render_template('offers.html', data=offer)
 
@@ -58,7 +66,13 @@ def choose_reservation():
     rrg = requests.post(target_url, data=rig, headers={"Content-Type": "text/turtle"}).text
 
     status = read_rrg(rrg)
-    status = status['BookingStatus'][0]
+    status_key = ['bookingStatus']
+    rrg_offers_keys = list(status.keys())
+    key_mapping = greedy_mapping(status_key, rrg_offers_keys)
+
+    print(status)
+    status = status[key_mapping['bookingStatus'][0]][0]
+    print(status)
 
 
     if status==1:
