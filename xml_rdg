@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+xmlns:resource="http://localhost:8080/cottage_sswap_server_war/"
+xmlns:sswap="http://sswapmeet.sswap.info/sswap/"
+xmlns:cs="http://localhost:8080/cottage_sswap_server_war/res/cottageServer.owl#"
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+	<sswap:Resource rdf:about="http://localhost:8080/cottage_sswap_server_war/SSWAPServlet">
+    <rdf:type rdf:resource="http://localhost:8080/cottage_sswap_server_war/res/cottageServer.owl#Thing" />
+        <sswap:providedBy rdf:resource="http://localhost:8080/cottage_sswap_server_war/res/resourceProvider" />
+		<sswap:name>SSWAP service</sswap:name>
+		<sswap:oneLineDescription>A service that ...</sswap:oneLineDescription>
+		<sswap:operatesOn>
+			<sswap:Graph>
+				<sswap:hasMapping>
+					<sswap:Subject>
+						<rdf:type rdf:resource="http://localhost:8080/cottage_sswap_server_war/res/cottageServer.owl#Request" />
+						<cs:hasName></cs:hasName>
+						<cs:hasClosestCity></cs:hasClosestCity>
+						<cs:hasPlaces rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</cs:hasPlaces>
+						<cs:hasBeds rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</cs:hasBeds>
+						<cs:hasDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</cs:hasDays>
+						<cs:distanceToCity rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</cs:distanceToCity>
+						<cs:distanceToLake rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</cs:distanceToLake>
+						<cs:hasShifRange rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</cs:hasShifRange>
+						<cs:bookStartAt rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">1970-01-01T00:00:00</cs:bookStartAt>
+						<sswap:mapsTo>
+							<sswap:Object>
+								<rdf:type rdf:resource="http://localhost:8080/cottage_sswap_server_war/res/cottageServer.owl#Response" />
+							    <cs:hasCottageName></cs:hasCottageName>
+								<cs:hasAddress></cs:hasAddress>
+								<cs:hasImgUrl></cs:hasImgUrl>
+								<cs:hasClosestCity></cs:hasClosestCity>
+								<cs:hasID rdf:datatype="http://www.w3.org/2001/XMLSchema#long">0</cs:hasID>
+								<cs:hasPlaces rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</cs:hasPlaces>
+								<cs:hasBeds rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</cs:hasBeds>
+								<cs:hasBookerName rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</cs:hasBookerName>
+								<cs:distanceToLake rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</cs:distanceToLake>
+								<cs:bookStartAt rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">1970-01-01T00:00:00</cs:bookStartAt>
+                                <cs:bookEndAt rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">1970-01-01T00:00:00</cs:bookEndAt>
+                            </sswap:Object>
+						</sswap:mapsTo>
+					</sswap:Subject>
+				</sswap:hasMapping>
+			</sswap:Graph>
+		</sswap:operatesOn>
+	</sswap:Resource>
+</rdf:RDF>

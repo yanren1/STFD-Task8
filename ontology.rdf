@@ -23,7 +23,7 @@ ex:Cottage2 a ex:Cottage ;
     ex:nearestCity "Boston" ;
     ex:places 6 ;
     ex:startDate "2023-11-15" ;
-    ex:unavailablePeriod "1" .
+    ex:unavailablePeriod "0" .
 
 ex:Cottage3 a ex:Cottage ;
     ex:address "321 Oakwood Ln." ;

@@ -12,7 +12,7 @@ def form_client():
 
     if request.method == 'POST':
         book_info['bookerName'] = str(request.form['bookerName'])
-        book_info['numPeople'] = str(request.form['numPeople'])
+        book_info['numPlace'] = str(request.form['numPeople'])
         book_info['numBedrooms'] = str(request.form['numBedrooms'])
         book_info['maxLakeDistance'] = str(request.form['maxLakeDistance'])
         book_info['nearestCity'] = str(request.form['nearestCity'])
@@ -40,14 +40,15 @@ def offers():
     str_offer = request.args.get('offer', 'default_value')
     rrg_offers = ast.literal_eval(str_offer)
 
-    html_keys = ['cottageName','bookerName','bookingNum','address','image','numPlaces',
+    html_keys = ['cottageName','bookerName','bookingNum','address','imageURL','numPlaces',
                  'numBedrooms','lakeDistance','nearestCity','startDate','endDate']
     rrg_offers_keys = list(rrg_offers.keys())
-    key_mapping = greedy_mapping(html_keys, rrg_offers_keys)
-
+    key_mapping = greedy_mapping(html_keys, rrg_offers_keys,use_model=1)
+    print('mediator key_mapping')
+    print(key_mapping)
     offer = {k:rrg_offers[v[0]] for k,v in key_mapping.items()}
-
-
+    print('mediator offer')
+    print(key_mapping)
     return render_template('offers.html', data=offer)
 
 

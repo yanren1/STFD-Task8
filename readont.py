@@ -50,7 +50,7 @@ def cottage_offer(user_input):
                  ex:startDate ?start_date ;
                  ex:imageURL ?image.
         
-        FILTER (?num_places >= {user_input['numPeople']} &&
+        FILTER (?num_places >= {user_input['numPlace']} &&
                 ?num_bedrooms >= {user_input['numBedrooms']} &&
                 ?lake_distance <= {user_input['maxLakeDistance']} &&
                 ?nearest_city = "{user_input['nearestCity']}" &&
@@ -63,14 +63,13 @@ def cottage_offer(user_input):
              'bookerName':[],
              'bookingNum': [],
              'address': [],
-             'image': [],
+             'imageURL': [],
              'numPlaces': [],
              'numBedrooms': [],
              'lakeDistance': [],
              'nearestCity': [],
              'startDate': [],
-             'endDate': [],
-             }
+             'endDate': [],}
 
     for result in results:
 
@@ -85,7 +84,7 @@ def cottage_offer(user_input):
             offer['cottageName'].append(cottage.split("#")[-1])
             offer['bookerName'].append(user_input['bookerName'])
             offer['address'].append(str(address))
-            offer['image'].append(str(image))
+            offer['imageURL'].append(str(image))
             offer['numPlaces'].append(str(num_places))
             offer['numBedrooms'].append(str(num_bedrooms))
             offer['lakeDistance'].append(str(lake_distance))

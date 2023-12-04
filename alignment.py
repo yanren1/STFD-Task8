@@ -1,5 +1,35 @@
 import Levenshtein
 
+from transformers import DistilBertModel, DistilBertTokenizer
+import torch
+import numpy as np
+import re
+
+model_name = 'distilbert-base-uncased'
+tokenizer = DistilBertTokenizer.from_pretrained(model_name)
+model = DistilBertModel.from_pretrained(model_name)
+
+def add_space_before_uppercase(text):
+    # 使用正则表达式，在大写字母的前面加上空格
+    modified_text = re.sub(r'([a-z])([A-Z])', r'\1 \2', text)
+    return modified_text
+
+def get_bert_embedding(sentence, model, tokenizer):
+    tokens = tokenizer(sentence, return_tensors="pt", truncation=True, padding=True)
+    with torch.no_grad():
+        outputs = model(**tokens)
+    return outputs.last_hidden_state.mean(dim=1).squeeze().numpy()
+
+def cosine_similarity(vec1, vec2):
+    dot_product = np.dot(vec1, vec2)
+    norm_vec1 = np.linalg.norm(vec1)
+    norm_vec2 = np.linalg.norm(vec2)
+
+    similarity = dot_product / (norm_vec1 * norm_vec2)
+    return similarity
+
+
+
 def get_prefix(rdf):
     prefix_dict = {}
 
@@ -16,14 +46,25 @@ def get_prefix(rdf):
                 prefix_dict[key] = value
     return prefix_dict
 
-def calculate_similarity(str1, str2):
-    distance = Levenshtein.distance(str1, str2)
-    max_len = max(len(str1), len(str2))
-    similarity = 1 - distance / max_len
-    return similarity
+def calculate_similarity(str1, str2, use_model=0):
+    if use_model==0:
+        distance = Levenshtein.distance(str1, str2)
+        max_len = max(len(str1), len(str2))
+        similarity = 1 - distance / max_len
+        return similarity
+    else:
+        str1 = add_space_before_uppercase(str1)
+        str2 = add_space_before_uppercase(str2)
+
+        vec1 = get_bert_embedding(str1, model, tokenizer)
+        vec2 = get_bert_embedding(str2, model, tokenizer)
+
+        similarity = cosine_similarity(vec1, vec2)
+        # print(str1,str2,similarity)
+        return similarity
 
 
-def greedy_mapping(list1, list2):
+def greedy_mapping(list1, list2, use_model=0):
     mapping = {}
     used_indices = set()
 
@@ -39,7 +80,7 @@ def greedy_mapping(list1, list2):
                     item2 = item2.split('/')[-2]
 
             if j not in used_indices:
-                similarity = calculate_similarity(item1, item2)
+                similarity = calculate_similarity(item1, item2,use_model=use_model)
 
                 if similarity > best_similarity:
                     best_similarity = similarity

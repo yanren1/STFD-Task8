@@ -13,6 +13,7 @@ def fill_rig(form_data,rdg):
             break
 
     prefix = prefix_mapping(['cottage'],rdg)
+    print(prefix)
     cottage_namespace = Namespace(prefix['cottage'])
 
     # alignment
@@ -28,8 +29,9 @@ def fill_rig(form_data,rdg):
                 p = p.split('/')[-1]
             rdg_key.append(p)
 
-    key_mapping = greedy_mapping(form_data_keys,rdg_key)
-
+    key_mapping = greedy_mapping(form_data_keys,rdg_key,use_model=1)
+    print('fill_rig key_mapping')
+    print(key_mapping)
     # fill_rig here
     for key, value in form_data.items():
             for s, p, o in g.triples((has_mapping_node, getattr(cottage_namespace, key_mapping[key][0]), None)):
@@ -106,6 +108,25 @@ def fill_rrg(rig,offer):
             mapsToNode = o
             break
 
+    offer_keys = list(offer.keys())
+    rig_key = []
+    for s, p, o in g.triples((mapsToNode, None, None)):
+        if prefix['cottage'] in p:
+            if'#' in p:
+                p = p.split('#')[-1]
+                if '/' in p:
+                    p = p.split('/')[-1]
+            else:
+                p = p.split('/')[-1]
+            rig_key.append(p)
+    key_mapping = greedy_mapping(offer_keys, rig_key, use_model=1)
+    print('fill_rrg key_mapping')
+    print(offer)
+    print(key_mapping)
+    offer = {v[0]:offer[k] for k,v in key_mapping.items()}
+    print('fill_rrg offer')
+    print(offer)
+
     keys = list(offer.keys())
     num_offer = len(offer[keys[0]])
     for i in range(num_offer):
@@ -118,7 +139,7 @@ def fill_rrg(rig,offer):
         else:
             new_maps_to_node = BNode()
             g.add((new_maps_to_node, RDF.type, sswap.Object))
-            g.add((new_maps_to_node, RDF.type, cottage.offers))  # add cottage:offers
+            # g.add((new_maps_to_node, RDF.type, cottage.offers))  # add cottage:offers
 
             for key in keys:
                 g.add((new_maps_to_node, getattr(cottage, key), Literal(offer[key][i])))
