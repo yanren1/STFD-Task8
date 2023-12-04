@@ -1,0 +1,32 @@
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sswap: <http://sswapmeet.sswap.info/sswap/> .
+@prefix resource: <http://example.org/cottageServices/> .
+@prefix cottage: <http://example.org/cottage/> .
+
+resource:bookCottage rdfs:type sswap:Resource, cottage:CottageBookService;
+    sswap:providedBy resource:resourceProvider;
+    sswap:name "Cottage Booking Service";
+    sswap:oneLineDescription "A service to book available cottages";
+    sswap:operatesOn [
+        rdfs:type sswap:Graph;
+        sswap:hasMapping [
+            rdfs:type sswap:Subject, cottage:Offers;
+            cottage:cottageName ""^^xsd:string;
+            cottage:bookerName ""^^xsd:string;
+            cottage:bookingNum ""^^xsd:string;
+            cottage:address ""^^xsd:string;
+            cottage:image ""^^xsd:string;
+            cottage:numPlaces ""^^xsd:string;
+            cottage:numBedrooms ""^^xsd:string;
+            cottage:lakeDistance ""^^xsd:string ;
+            cottage:nearestCity ""^^xsd:string ;
+            cottage:startDate ""^^xsd:string ;
+            cottage:endDate ""^^xsd:string ;
+
+            sswap:mapsTo [
+                rdfs:type sswap:Object, cottage:Offers;
+                cottage:BookingStatus ""^^xsd:string;
+            ]
+        ]
+    ].

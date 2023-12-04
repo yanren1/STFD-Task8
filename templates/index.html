@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cottage Booking Service</title>
+</head>
+<body>
+    <h1>Welcome to the Cottage Booking Service</h1>
+    <form id="bookingForm" method="post" action="/">
+        <label for="bookerName">Name:</label>
+        <input type="text" id="bookerName" name="bookerName" required><br><br>
+
+        <label for="numPeople">Number of People:</label>
+        <input type="number" id="numPeople" name="numPeople" required><br><br>
+
+        <label for="numBedrooms">Number of Bedrooms:</label>
+        <input type="number" id="numBedrooms" name="numBedrooms" required><br><br>
+
+        <label for="maxLakeDistance">Max Distance from Lake (meters):</label>
+        <input type="number" id="maxLakeDistance" name="maxLakeDistance" required><br><br>
+
+        <label for="nearestCity">City (Nearby):</label>
+        <input type="text" id="nearestCity" name="nearestCity" required><br><br>
+
+        <label for="maxCityDistance">Max Distance to City (meters):</label>
+        <input type="number" id="maxCityDistance" name="maxCityDistance" required><br><br>
+
+        <label for="numDays">Number of Days:</label>
+        <input type="number" id="numDays" name="numDays" required><br><br>
+
+        <label for="startDate">Booking Start Date:</label>
+        <input type="date" id="startDate" name="startDate" required><br><br>
+
+        <label for="maxDateShift">Max Date Shift (days):</label>
+        <input type="number" id="maxDateShift" name="maxDateShift" required><br><br>
+
+        <input type="submit" value="Submit Booking Request">
+    </form>
+
+</body>
+</html>

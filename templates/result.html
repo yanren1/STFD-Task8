@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Reservation</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 50%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Reservation</h1>
+    <table>
+        <tr>
+            {% for key in data.keys() %}
+                <th>{{ key }}</th>
+            {% endfor %}
+        </tr>
+        </tr>
+            <td>{{ data['cottageName'][i] }}</td>
+            <td>{{ data['bookerName'][i] }}</td>
+            <td>{{ data['bookingNum'][i] }}</td>
+            <td>{{ data['address'][i] }}</td>
+            <td>{{ data['image'][i] }}</td>
+            <td>{{ data['numPlaces'][i] }}</td>
+            <td>{{ data['numBedrooms'][i] }}</td>
+            <td>{{ data['lakeDistance'][i] }}</td>
+            <td>{{ data['nearestCity'][i] }}</td>
+            <td>{{ data['startDate'][i] }}</td>
+            <td>{{ data['endDate'][i] }}</td>
+        </tr>
+    </table>
+</body>
+</html>

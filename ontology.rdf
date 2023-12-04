@@ -1,0 +1,75 @@
+@prefix ex: <http://example.org#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:Cottage1 a ex:Cottage ;
+    ex:address "789 Lakeside Dr." ;
+    ex:availableDays 10 ;
+    ex:bedrooms 2 ;
+    ex:distanceToCity 20 ;
+    ex:distanceToLake 100 ;
+    ex:imageURL "http://example.org/images/cottage1.jpg" ;
+    ex:nearestCity "Boston" ;
+    ex:places 3 ;
+    ex:startDate "2023-11-15" ;
+    ex:unavailablePeriod "0" .
+
+ex:Cottage2 a ex:Cottage ;
+    ex:address "567 Pine Valley Rd." ;
+    ex:availableDays 3 ;
+    ex:bedrooms 3 ;
+    ex:distanceToCity 25 ;
+    ex:distanceToLake 250 ;
+    ex:imageURL "http://example.org/images/cottage2.jpg" ;
+    ex:nearestCity "Boston" ;
+    ex:places 6 ;
+    ex:startDate "2023-11-15" ;
+    ex:unavailablePeriod "1" .
+
+ex:Cottage3 a ex:Cottage ;
+    ex:address "321 Oakwood Ln." ;
+    ex:availableDays 7 ;
+    ex:bedrooms 2 ;
+    ex:distanceToCity 18 ;
+    ex:distanceToLake 30 ;
+    ex:imageURL "http://example.org/images/cottage3.jpg" ;
+    ex:nearestCity "Denver" ;
+    ex:places 4 ;
+    ex:startDate "2023-05-10" ;
+    ex:unavailablePeriod "0" .
+
+ex:Cottage4 a ex:Cottage ;
+    ex:address "876 Hillside Ave." ;
+    ex:availableDays 21 ;
+    ex:bedrooms 1 ;
+    ex:distanceToCity 12 ;
+    ex:distanceToLake 180 ;
+    ex:imageURL "http://example.org/images/cottage4.jpg" ;
+    ex:nearestCity "Dallas" ;
+    ex:places 3 ;
+    ex:startDate "2023-06-25" ;
+    ex:unavailablePeriod "0" .
+
+ex:Cottage5 a ex:Cottage ;
+    ex:address "543 Riverside Rd." ;
+    ex:availableDays 14 ;
+    ex:bedrooms 2 ;
+    ex:distanceToCity 14 ;
+    ex:distanceToLake 120 ;
+    ex:imageURL "http://example.org/images/cottage5.jpg" ;
+    ex:nearestCity "Phoenix" ;
+    ex:places 5 ;
+    ex:startDate "2023-07-12" ;
+    ex:unavailablePeriod "0" .
+
+ex:Cottage6 a ex:Cottage ;
+    ex:address "234 Meadowview Pl." ;
+    ex:availableDays 7 ;
+    ex:bedrooms 1 ;
+    ex:distanceToCity 8 ;
+    ex:distanceToLake 70 ;
+    ex:imageURL "http://example.org/images/cottage6.jpg" ;
+    ex:nearestCity "San Diego" ;
+    ex:places 2 ;
+    ex:startDate "2023-08-03" ;
+    ex:unavailablePeriod "0" .
+
